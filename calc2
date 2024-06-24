@@ -68,7 +68,7 @@
             }
 
             const x = 500 / (porcentaje / 100);
-            document.getElementById('resultado').innerText = "El valor de x es: " + x;
+            document.getElementById('resultado').innerText = "El lote de posicion es: " + x;
 
             if (!isNaN(entrada) && !isNaN(stop)) {
                 const diferencia = Math.abs(entrada - stop);
