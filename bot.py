@@ -1,8 +1,10 @@
 """Telegram bot que recibe links de Reels de Instagram y devuelve el número de views."""
 
+import base64
 import logging
 import os
 import re
+import tempfile
 import time
 
 import instaloader
@@ -15,6 +17,7 @@ if not BOT_TOKEN:
 IG_USER = os.environ.get("IG_USER")
 IG_PASS = os.environ.get("IG_PASS")
 IG_SESSION_FILE = os.environ.get("IG_SESSION_FILE")
+IG_SESSION_B64 = os.environ.get("IG_SESSION_B64")
 
 logging.basicConfig(
     level=logging.INFO,
@@ -35,7 +38,16 @@ loader = instaloader.Instaloader(
     quiet=True,
 )
 
-if IG_SESSION_FILE and IG_USER and os.path.exists(IG_SESSION_FILE):
+if IG_SESSION_B64 and IG_USER:
+    try:
+        path = os.path.join(tempfile.gettempdir(), f"ig-session-{IG_USER}")
+        with open(path, "wb") as f:
+            f.write(base64.b64decode(IG_SESSION_B64))
+        loader.load_session_from_file(IG_USER, path)
+        log.info("Sesión de Instagram cargada desde IG_SESSION_B64 para %s", IG_USER)
+    except Exception as exc:
+        log.warning("No pude cargar la sesión desde IG_SESSION_B64: %s", exc)
+elif IG_SESSION_FILE and IG_USER and os.path.exists(IG_SESSION_FILE):
     try:
         loader.load_session_from_file(IG_USER, IG_SESSION_FILE)
         log.info("Sesión de Instagram cargada desde archivo para %s", IG_USER)
