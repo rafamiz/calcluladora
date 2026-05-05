@@ -76,12 +76,12 @@ def fetch_views(shortcode: str) -> tuple[int | None, str]:
     if not post.is_video:
         return None, "no es un video/reel"
 
-    views = post.video_view_count
-    if views is None:
-        views = getattr(post, "video_play_count", None)
-    if views is None:
+    play_count = getattr(post, "video_play_count", None)
+    view_count = post.video_view_count
+    candidates = [c for c in (play_count, view_count) if c is not None]
+    if not candidates:
         return None, "Instagram no expuso el contador"
-    return int(views), ""
+    return int(max(candidates)), ""
 
 
 @bot.message_handler(commands=["start", "help"])
