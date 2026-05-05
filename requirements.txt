@@ -1,0 +1,2 @@
+pyTelegramBotAPI>=4.14
+instaloader>=4.11
