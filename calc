@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Porcentajes</title>
+    <title>URBA XL</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,7 +47,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora de Porcentajes</h1>
+        <h1>URBA XL</h1>
         <input type="number" id="porcentaje" placeholder="Ingresa un porcentaje">
         <button onclick="calcularX()">Calcular</button>
         <div id="resultado"></div>
